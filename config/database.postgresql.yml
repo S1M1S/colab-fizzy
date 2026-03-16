@@ -1,0 +1,49 @@
+default: &default
+  # host: "/tmp"
+  adapter: postgresql
+  template: template0
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+
+development:
+  primary:
+    <<: *default
+    database: fizzy_development
+  queue:
+    <<: *default
+    database: fizzy_development_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: fizzy_development_cable
+    migrations_paths: db/cable_migrate
+  cache:
+    <<: *default
+    database: fizzy_development_cache
+    migrations_paths: db/cache_migrate
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: fizzy_test
+  pool: 64
+
+production:
+  primary: &production
+    <<: *default
+    username: fizzy
+    database: fizzy_production
+  queue:
+    <<: *production
+    database: fizzy_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *production
+    database: fizzy_production_cable
+    migrations_paths: db/cable_migrate
+  cache:
+    <<: *default
+    database: fizzy_production_cache
+    migrations_paths: db/cache_migrate

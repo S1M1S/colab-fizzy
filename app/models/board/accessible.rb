@@ -11,7 +11,12 @@ module Board::Accessible
       end
 
       def grant_to(users)
-        Access.insert_all Array(users).collect { |user| { id: ActiveRecord::Type::Uuid.generate, board_id: proxy_association.owner.id, user_id: user.id, account_id: proxy_association.owner.account.id } }
+        # Access.insert_all Array(users).collect { |user| { id: ActiveRecord::Type::Uuid.generate, board_id: proxy_association.owner.id, user_id: user.id, account_id: proxy_association.owner.account.id } }
+
+        # HACK: above code throws errors in postgres
+        users.each do |user|
+          Access.create_or_find_by board_id: proxy_association.owner.id, user_id: user.id, account_id: proxy_association.owner.account.id
+        end
       end
 
       def revoke_from(users)

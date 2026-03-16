@@ -52,7 +52,7 @@ class NotificationsDataMigration < ActiveRecord::Migration[8.2]
       loop do
         duplicates = Notification.find_by_sql(<<~SQL)
           SELECT user_id, card_id,
-                 MAX(id) AS keep_id,
+                 MAX(id::text) AS keep_id,
                  COUNT(*) AS total,
                  SUM(CASE WHEN read_at IS NULL THEN 1 ELSE 0 END) AS unread_total
           FROM notifications

@@ -1,5 +1,6 @@
 class Search::Record < ApplicationRecord
-  include const_get(connection.adapter_name)
+  # include const_get(connection.adapter_name)
+  include Trilogy # HACK: no Postgres module
 
   belongs_to :searchable, polymorphic: true
   belongs_to :card
