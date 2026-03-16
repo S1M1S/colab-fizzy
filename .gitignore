@@ -10,6 +10,7 @@
 # Ignore all environment files (except templates).
 /.env*
 !/.env*.erb
+!/.env
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -41,3 +42,8 @@
 
 /config/credentials/*.key
 .DS_Store
+/vendor
+.direnv
+
+# Nix
+result
