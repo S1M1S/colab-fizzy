@@ -38,6 +38,12 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-
 /config/credentials/*.key
+.env
+
 .DS_Store
+/vendor
+.direnv
+
+# Nix
+result
