@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+sudo -u fizzy bash << EOF
+  cd /Users/fizzy/colab-fizzy/
+  git pull
+
+  nix run .#setup
+  nix run .#restart
+EOF
