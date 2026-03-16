@@ -70,7 +70,7 @@ Rails.application.configure do
   config.action_view.annotate_rendered_view_with_filenames = true
 
   # Uncomment if you wish to allow Action Cable access from any origin.
-  # config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.disable_request_forgery_protection = true
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
@@ -89,6 +89,7 @@ Rails.application.configure do
     "fizzy.localhost",
     "localhost",
     "127.0.0.1",
+    /29.0.0.\d+/,
     /fizzy-\d+/,   # review apps: fizzy-123, fizzy-456:3000
     /.*\.ts\.net/, # tailscale serve: hostname.tail1234.ts.net
     /.*\.nip\.io/  # nip.io for mobile apps
@@ -96,4 +97,12 @@ Rails.application.configure do
 
   # Canonical host for mailer URLs (emails always link here, not personal Tailscale URLs)
   config.action_mailer.default_url_options = { host: "#{config.hosts.first}:3006" }
+
+  # Use a different cache store in production.
+  config.cache_store = :solid_cache_store
+
+  # Use a real queuing backend for Active Job (and separate queues per environment).
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue, reading: :queue } }
+  # config.active_job.queue_name_prefix = "fizzy_production"
 end
