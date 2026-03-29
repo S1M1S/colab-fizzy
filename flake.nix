@@ -12,6 +12,7 @@
       nixpkgs-ruby,
     }:
     let
+      appDir = "/Users/fizzy/fizzy-bea";
       system = "x86_64-darwin";
       pkgs = nixpkgs.legacyPackages.${system};
       ruby = nixpkgs-ruby.lib.packageFromRubyVersionFile {
@@ -93,7 +94,7 @@
           name = "deploy";
           text = ''
             cd ${appDir};
-            ${pkgs.git}/bin/git pull
+            ${pkgs.git}/bin/git pull --rebase
 
             ${setup}/bin/setup
             ${restart}/bin/restart
